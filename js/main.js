@@ -11,30 +11,23 @@ let planet = new THREE.Object3D()
 
 scene.add(light)
 
+const texture = new THREE.TextureLoader().load( 'map.jpg' );
+
 let geoEarth = new THREE.SphereGeometry(20, 40, 40)
-let matEarth = new THREE.MeshPhongMaterial()
-matEarth.transparent = true
-matEarth.opacity = 0.9
-matEarth.color = new THREE.Color(0x2194ce)
-matEarth.flatShading = true
+let matEarth = new THREE.MeshPhongMaterial({
+    transparent: false,
+    map: texture,
+    emissive: 0x20202
+
+})
+
+//matEarth.flatShading = true
 
 let earthMesh = new THREE.Mesh(geoEarth, matEarth)
 earthMesh.position.set(-100, 0, 0)
 earthMesh.rotation.y = 5
 
 scene.add(earthMesh)
-
-var xhr = new XMLHttpRequest()
-xhr.open('GET', "countries_states.geojson")
-xhr.setRequestHeader('Content-Type', 'application/geojson')
-xhr.onload = () => {
-    if (xhr.status === 200) {
-        drawThreeGeo(JSON.parse(xhr.responseText), 30, 'sphere', {
-            color: 0x80FF80
-        }, planet)
-    }
-}
-xhr.send()
 
 
 // drawThreeGeo(json, 10, 'sphere', {
