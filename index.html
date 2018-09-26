@@ -9,8 +9,72 @@
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 </head>
 <body>
+        <!-- WebGL shaders -->
+        <script id="simpleVertex" type="x-shader/x-vertex">
+              varying vec2 vUv;
+        
+              void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            </script>
+        
+        <script id="horizontalBlurFrag" type="x-shader/x-fragment">
+                uniform sampler2D tDiffuse;
+                uniform float h;
+        
+                varying vec2 vUv;
+        
+                void main() {
+                    vec4 sum = vec4( 0.0 );
+        
+                    vec4 originalSample = texture2D( tDiffuse, vUv );
+        
+                    sum += texture2D( tDiffuse, vec2( vUv.x - 4.0 * h, vUv.y ) ) * 0.0162;
+                    sum += texture2D( tDiffuse, vec2( vUv.x - 3.0 * h, vUv.y ) ) * 0.0540;
+                    sum += texture2D( tDiffuse, vec2( vUv.x - 2.0 * h, vUv.y ) ) * 0.1216;
+                    sum += texture2D( tDiffuse, vec2( vUv.x - 1.0 * h, vUv.y ) ) * 0.1945;
+                    sum += originalSample * 0.2270;
+                    sum += texture2D( tDiffuse, vec2( vUv.x + 1.0 * h, vUv.y ) ) * 0.1945;
+                    sum += texture2D( tDiffuse, vec2( vUv.x + 2.0 * h, vUv.y ) ) * 0.1216;
+                    sum += texture2D( tDiffuse, vec2( vUv.x + 3.0 * h, vUv.y ) ) * 0.0540;
+                    sum += texture2D( tDiffuse, vec2( vUv.x + 4.0 * h, vUv.y ) ) * 0.0162;
+        
+                    gl_FragColor = sum;
+                }
+            </script>
+        
+        <script id="verticalBlurFrag" type="x-shader/x-fragment">
+                uniform sampler2D tDiffuse;
+                uniform float v;
+        
+                varying vec2 vUv;
+        
+                void main() {
+                    vec4 sum = vec4( 0.0 );
+        
+                    vec4 originalSample = texture2D( tDiffuse, vUv );
+        
+                    sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 4.0 * v ) ) * 0.0162;
+                    sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 3.0 * v ) ) * 0.0540;
+                    sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 2.0 * v ) ) * 0.1216;
+                    sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 1.0 * v ) ) * 0.1945;
+                    sum += originalSample * 0.2270;
+                    sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 1.0 * v ) ) * 0.1945;
+                    sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 2.0 * v ) ) * 0.1216;
+                    sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 3.0 * v ) ) * 0.0540;
+                    sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 4.0 * v ) ) * 0.0162;
+        
+                    gl_FragColor = sum;
+                }
+            </script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/three.js"></script>
-    <script src="js/controls/OrbitControls.js"></script>
+    <script src="https://threejs.org/examples/js/shaders/CopyShader.js" charset="utf-8"></script>
+    <script src="https://threejs.org/examples/js/postprocessing/EffectComposer.js" charset="utf-8"></script>
+    <script src="https://threejs.org/examples/js/postprocessing/RenderPass.js" charset="utf-8"></script>
+    <script src="https://threejs.org/examples/js/postprocessing/ShaderPass.js" charset="utf-8"></script>
+    <script src="https://threejs.org/examples/js/postprocessing/MaskPass.js" charset="utf-8"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

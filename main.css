@@ -1,3 +1,7 @@
 canvas {
     display: block;
 }
+
+.cursor {
+    cursor: pointer;
+}
