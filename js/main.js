@@ -1,6 +1,6 @@
 let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000)
-camera.position.set(-35, 0, 110)
-
+//camera.position.set(-35, 0, 110)
+camera.position.set(0, 40, 50)
 const scene = new THREE.Scene()
 
 document.addEventListener('mousemove', onDocumentMouseMove, false)
@@ -85,6 +85,7 @@ let pointMeshes = new THREE.Object3D()
 let pointMesh = []
 let i = 0
 let dataset
+let max = 10291926.9
 
 var xhr = new XMLHttpRequest()
 xhr.open('GET', "data/co2.json")
@@ -100,13 +101,17 @@ xhr.send()
 function displayco2(dataset) {
     dataset.forEach(data => {
        let size = 0
-       let max = (currentDate === "1990") ? 4823403.1 : 10291926.9;
-        if (data[currentDate] < 50000) {
-            size = (data[currentDate] / max) * 200
-        } else if (data[currentDate] < 500000 && data[currentDate] >= 50000) {
+        if (data[currentDate] < 30000) {
+            size = (data[currentDate] / max) * 1000
+        }
+        else if (data[currentDate] < 100000 && data[currentDate] >= 30000) {
+
+            size = (data[currentDate] / max) * 500
+
+        } else if (data[currentDate] < 600000 && data[currentDate] >= 100000) {
             size = (data[currentDate] / max) * 45
         } else {
-            size  = (data[currentDate] / max) * 10
+            size = (data[currentDate] / max) * 10
         }
         pointMesh[i] = new THREE.Mesh(point, matPoint)
         pointMesh[i].scale.x = pointMesh[i].scale.y = size
@@ -126,13 +131,17 @@ function updatePoints() {
     console.log(currentDate);
     let i = 0
     dataset.forEach(data => {
-        max = (currentDate === "1990") ? 4823403.1 : 10291926.9;
-        if (data[currentDate] < 50000) {
-            size = (data[currentDate] / max) * 150
-        } else if (data[currentDate] < 500000 && data[currentDate] >= 50000) {
+        if (data[currentDate] < 30000) {
+            size = (data[currentDate] / max) * 1000
+        }
+        else if (data[currentDate] < 100000 && data[currentDate] >= 30000){
+            
+            size = (data[currentDate] / max) * 500
+
+        } else if (data[currentDate] < 600000 && data[currentDate] >= 100000) {
             size = (data[currentDate] / max) * 45
         } else {
-            size = (data[currentDate] / max) * 12
+            size = (data[currentDate] / max) * 10
         }
         
         pointMesh[i].scale.x = pointMesh[i].scale.y = size
@@ -142,7 +151,7 @@ function updatePoints() {
     })
 }
 
-planet.add(pointMeshes)
+//planet.add(pointMeshes)
 
 let earthMesh = new THREE.Mesh(geoEarth, matEarth)
 earthMesh.position.set(0, 0, 0)
@@ -181,7 +190,7 @@ renderer.shadowMap.enabled = true
 var animate = function () {
     window.requestAnimationFrame(animate)
 
-    planet.rotation.y += 0.005
+   // planet.rotation.y += 0.005
     
    // pointMeshes.children[0].lookAt(camera.position)
     for (let i = 0; i < pointMeshes.children.length; i++) {
@@ -218,7 +227,7 @@ var animate = function () {
                 info.appendChild(title)
 
                 let content = document.createElement('p')
-                content.innerText = `${INTERSECTED.userData.conso} co2 (kt)`
+                content.innerText = `${INTERSECTED.userData.conso} co² (kt)`
                 content.classList.add('conso')
                 info.appendChild(content)
             }
@@ -272,4 +281,9 @@ function onDocumentMouseMove(event) {
     }
 
 }
+
+document.getElementById('next1').addEventListener('click', function() {
+    camera.position.set(-35, 0, 110)
+    document.getElementById('home').style.transform = "translateY(-100vh)";
+})
 
