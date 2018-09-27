@@ -5,3 +5,23 @@ canvas {
 .cursor {
     cursor: pointer;
 }
+
+select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+#info {
+    background-color: white;
+    border-radius: 50px 50px;
+    padding: 20px 20px;
+}
+
+.conso {
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+}
