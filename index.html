@@ -9,31 +9,91 @@
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 </head>
 <body>
+    <div class="noise"></div>
     <div class="home" id="home">
         <section>
             <h1>CO²WORLD</h1>
             <h2>Découvrez l’importance des émissions de Co2 vis-à-vis du changement climatique.</h2>
-            <button id="next1">Découvrir</button>
+            <p class="button" id="next1"><img src="textures/btn.png" alt=""><span>Découvrir</span></p>
         </section>
     </div>
-    <div class="page1" id="page1">
+    <div class="page1 content" id="page1">
         <section>
-            <h1>CO²WORLD</h1>
-            <h2>Découvrez l’importance des émissions de Co2 vis-à-vis du changement climatique.</h2>
-            <button id="next2">Découvrir</button>
+            <h2>Le CO²</h2>
+            <p>joue un rôle
+important sur le
+changement climatique...</p>
+            <p class="button" id="next2"><img src="textures/btn.png" alt=""><span>Lire la suite</span></p>
         </section>
     </div>
-    <div class="page2" id="page2">
+    <div class="page2 content" id="page2">
         <section>
-            <h1>CO²WORLD</h1>
-            <h2>Découvrez l’importance des émissions de Co2 vis-à-vis du changement climatique.</h2>
-            <button id="next3">Découvrir</button>
+            <p>Le <span>Co2</span> est un gaz à effet de serre
+qui a un rôle important sur la
+température du globe et donc sur le
+changement climatique, car sa durée
+de vie dans l’atmosphère
+est supérieure à la centaine d’années.
+            
+Le Co2 n’a jamais été aussi abondant
+dans l’air depuis 800’000 ans,
+accentuant la capacité de
+l’atmosphère de conserverla chaleur
+du soleil par effet de serre.</p>
+            <p class="button" id="next3"><img src="textures/btn.png" alt=""><span>Découvrir</span></p>
         </section>
     </div>
-    <select name="" id="selectDate">
-        <option value="1990" selected>1990</option>
-        <option value="2014">2014</option>
-    </select>
+    <div class="main content" id="main">
+        <select name="" id="selectDate" style="display:none">
+            <option value="1990" selected>1990</option>
+            <option value="2014">2014</option>
+        </select>
+        <div class="selection" id="selection">
+            <p class="date-selected"><a href="#" id="1990" class="selected">1990</a></p><p><a href="#" id="2014">2014</a></p>
+        </div>
+        <div class="data data-90 data-selected" id="data1990">
+            <h3>
+<span>22</span>
+millions</h3>
+            <p>de kilo tonnes
+d'émissions de co²
+            </p>
+        </div>
+        <div class="data data-14" id="data2014">
+            <h3>
+<span>36</span>
+millions</h3>
+            <p>de kilo tonnes
+d'émissions de co²</p>
+        </div>
+        <p class="button" id="next4"><img src="textures/btn.png" alt=""></p>
+    </div>
+    <div class="graph1 content" id="graph1">
+        <section>
+            <h3>
+<span>3</span>
+causes
+principales</h3>
+            <div class="graph1-content">
+                <h4>La production de charbon</h4>
+                <div class="progressbar">
+                    <div style="width: 60%"></div>
+                </div>
+                <p>60%</p>
+                <h4>Le transpport</h4>
+                <div class="progressbar">
+                    <div style="width: 25%"></div>
+                </div>
+                <p>25%</p>
+                <h4>La déforestation</h4>
+                <div class="progressbar">
+                    <div style="width: 15%"></div>
+                </div>
+                <p>15%</p>
+            </div>
+            <!--p class="button" id="next5"><img src="textures/btn.png" alt=""><span>Découvrir</span></p-->
+        </section>
+    </div>
     <script src="js/three.js"></script>
     <script src="js/main.js"></script>
 </body>

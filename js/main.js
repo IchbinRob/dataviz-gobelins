@@ -1,19 +1,21 @@
 let camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 3000)
 //camera.position.set(-35, 0, 110)
 camera.position.set(0, 40, 50)
+let cameraPositionInfo = new THREE.Vector3(-35, 0, 110)
+started = false;
 const scene = new THREE.Scene()
 
 document.addEventListener('mousemove', onDocumentMouseMove, false)
 
-let currentDate = document.getElementById('selectDate').options[document.getElementById('selectDate').selectedIndex].value
-console.log(currentDate);
+let currentDate = "1990"
 
-document.getElementById('selectDate').addEventListener('change', ()=> {
-    currentDate = document.getElementById('selectDate').options[document.getElementById('selectDate').selectedIndex].value
-    matCo2.opacity = (currentDate === "1990") ? 0.3 : 0.9,
-    console.log(currentDate);
-    updatePoints()
-})
+
+// document.getElementById('selectDate').addEventListener('change', ()=> {
+//     currentDate = document.getElementById('selectDate').options[document.getElementById('selectDate').selectedIndex].value
+//     matCo2.opacity = (currentDate === "1990") ? 0.3 : 0.9,
+//     console.log(currentDate);
+//     updatePoints()
+// })
 
 var raycaster = new THREE.Raycaster()
 var mouse = new THREE.Vector2(), INTERSECTED
@@ -175,7 +177,8 @@ scene.add(planet)
 
 
 const renderer = new THREE.WebGLRenderer({
-        antialiasing: true
+        antialiasing: true,
+        alpha: true
 })
 
 
@@ -186,11 +189,21 @@ document.body.appendChild(renderer.domElement)
 renderer.autoClear = false
 renderer.shadowMap.enabled = true
 
-    
+
+let rotation =  true
+let speedrotate = false
+
 var animate = function () {
     window.requestAnimationFrame(animate)
+    
 
-   // planet.rotation.y += 0.005
+    if(rotation) {
+        planet.rotation.y += 0.003
+    }
+
+    if (speedrotate) {
+        planet.rotation.y += 0.01
+    }
     
    // pointMeshes.children[0].lookAt(camera.position)
     for (let i = 0; i < pointMeshes.children.length; i++) {
@@ -199,7 +212,11 @@ var animate = function () {
     }
 
     // find intersections
-
+    if (started) {
+        camera.position.x += (cameraPositionInfo.x - camera.position.x) * 0.03;
+        camera.position.y += (cameraPositionInfo.y - camera.position.y) * 0.03;
+        camera.position.z += (cameraPositionInfo.z - camera.position.z) * 0.03;
+    }
 
     raycaster.setFromCamera(mouse, camera)
 
@@ -275,15 +292,97 @@ function onDocumentMouseMove(event) {
     mouse.y = - (event.clientY / renderer.domElement.clientHeight) * 2 + 1
     let info = document.getElementById('info')
     if (info) {
-        info.style.left = `${event.clientX}px`
-        info.style.top = `${event.clientY - 75}px`
+        info.style.left = `${event.clientX - 150}px`
+        info.style.top = `${event.clientY - 100}px`
         info.style.display = "block"
     }
 
 }
 
 document.getElementById('next1').addEventListener('click', function() {
-    camera.position.set(-35, 0, 110)
-    document.getElementById('home').style.transform = "translateY(-100vh)";
+    //camera.position.set(-35, 0, 110)
+    //cameraPositionInfo = new THREE.Vector3(-35, 0, 110)
+    started = true
+
+    document.getElementById('home').style.transform = "translateY(-100vh)"
+    document.getElementById('page1').style.transform = "translateY(0vh)"
+
+    document.querySelector('#next1 img').classList.add('btn-active')
+})
+
+document.getElementById('next2').addEventListener('click', function () {
+    document.getElementById('page1').style.transform = "translateY(-100vh)"
+    document.getElementById('page2').style.transform = "translateY(0vh)"
+    document.querySelector('#next2 img').classList.add('btn-active')
+    speedrotate = true
+    rotation = false
+    setTimeout(()=> {
+        speedrotate = false
+        rotation = true
+    }, 1200)
+    started = false
+})
+
+
+document.getElementById('next3').addEventListener('click', function () {
+    document.getElementById('page2').style.transform = "translateY(-100vh)"
+    document.getElementById('main').style.transform = "translateY(0vh)"
+    document.querySelector('#next3 img').classList.add('btn-active')
+    speedrotate = true
+    rotation = false
+    setTimeout(() => {
+        planet.add(pointMeshes)
+        speedrotate = false
+        rotation = true
+    }, 1200)
+})
+
+document.getElementById('next4').addEventListener('click', function () {
+    document.getElementById('main').style.transform = "translateY(-100vh)"
+    document.getElementById('graph1').style.transform = "translateY(0vh)"
+    document.querySelector('#next4 img').classList.add('btn-active')
+    planet.remove(pointMeshes)
+    cameraPositionInfo = new THREE.Vector3(-100, 0, 110)
+    started = true
+    speedrotate = true
+    rotation = false
+    setTimeout(() => {
+        speedrotate = false
+        rotation = true
+    }, 1200)
+})
+
+document.getElementById('1990').addEventListener('click', function () {
+
+    if (!document.getElementById('1990').classList.contains('selected')) {
+        document.getElementById('1990').classList.add('selected')
+        document.getElementById('2014').classList.remove('selected')
+
+        document.getElementById('data1990').classList.add('data-selected')
+        document.getElementById('1990').parentNode.classList.add('date-selected')
+        document.getElementById('data2014').classList.remove('data-selected')
+        document.getElementById('2014').parentNode.classList.remove('date-selected')
+
+        currentDate = 1990
+        matCo2.opacity = 0.3,
+        updatePoints()
+    }
+})
+
+document.getElementById('2014').addEventListener('click', function () {
+
+    if (!document.getElementById('2014').classList.contains('selected')) {
+        document.getElementById('2014').classList.add('selected')
+        document.getElementById('1990').classList.remove('selected')
+
+        document.getElementById('data2014').classList.add('data-selected')
+        document.getElementById('2014').parentNode.classList.add('date-selected')
+        document.getElementById('data1990').classList.remove('data-selected')
+        document.getElementById('1990').parentNode.classList.remove('date-selected')
+
+        currentDate = 2014
+        matCo2.opacity = 0.9,
+        updatePoints()
+    }
 })
 

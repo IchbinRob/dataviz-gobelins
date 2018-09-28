@@ -14,7 +14,9 @@
 }
 
 body {
-    font-family: "Grotesk Regular"
+    font-family: "Grotesk Regular";
+    overflow: hidden;
+    background-color: black;
 }
 
 canvas {
@@ -40,7 +42,7 @@ select {
     left: 0;
     z-index: 500;
     transform: translateY(0vh);
-    transition: 0.5s transform ease-out;
+    transition: 0.7s .5s transform ease-in-out;
 }
 
 .home h1 {
@@ -67,7 +69,103 @@ select {
     margin: 0 auto;
 }
 
+.content {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    transform: translateY(150vh);
+    transition: 0.7s .5s transform ease-in-out;
+    z-index: 500;
+    margin-left: 10vw;
+    margin-top: 30vh;
+}
 
+
+
+.content h2 {
+    font-size: 71px;
+    font-family: 'Grotesk Bold';
+    line-height: normal;
+    color: #c0914e;
+}
+
+.content p:not(.button) {
+    font-size: 2rem;
+    font-family: 'Grotesk Light';
+    line-height: normal;
+    color: white;
+    text-transform: uppercase;
+    white-space: pre;
+}
+
+
+.page2 p:not(.button) {
+    font-size: 1.5rem;
+    font-family: 'Grotesk Regular';
+    line-height: normal;
+    color: white;
+    white-space: pre;
+    text-transform: inherit;
+}
+
+.page2 p:not(.button) span {
+    font-family: 'Grotesk Bold';
+    color: #c0914e;
+}
+
+.main {
+    margin-top: 20vh;
+}
+
+.selection p:not(.button) {
+
+    white-space: inherit;
+    display: inline-block;
+    border-bottom: #313131 2px solid;
+}
+
+.selection p.date-selected {
+    border-bottom: #c0914e 5px solid;
+}
+
+.selection p a {
+
+    display: block;
+    font-size: 1.8rem;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: white;
+    font-family: 'Grotesk Light';
+    text-align: center;
+    padding: 10px 57px;
+    box-sizing: border-box;
+}
+
+.data {
+    display: none;
+}
+
+.data-selected {
+    display: inherit;
+}
+
+.data h3,
+.graph1 h3 {
+    font-size: 5rem;
+    font-family: 'Grotesk Bold';
+    line-height: 4.5rem;
+    color: #c0914e;
+    text-transform: uppercase;
+    white-space: pre;
+}
+
+.data h3 span,
+.graph1 h3 span{
+    font-size: 8rem;
+}
 
 #info {
     background-color: white;
@@ -91,4 +189,133 @@ select {
     margin: 0 auto;
     width: 100%;
     font-size: 1.5rem;
+}
+
+.graph1 section {
+    display: flex;
+    justify-content: stretch; 
+}
+
+.graph1-content {
+    font-family: 'Grotesk Light';
+    color: white;
+    text-transform: uppercase;
+    font-size: 2rem;
+    width: 25%;
+    margin-left: 10vw;
+    margin-top: 4vh;
+}
+
+.graph1 .graph1-content p {
+    font-size: 1.3rem;
+    padding-top: 5px;
+    color: #c0914e;
+    font-family: 'Grotesk Bold';
+    margin-bottom: 20px;
+}
+
+.progressbar {
+    background-color: #313131;
+    padding: 1px;
+    height: 0.1px;
+    position: relative;
+}
+
+.progressbar>div {
+    background-color: #c0914e;
+    height: 4px;
+    position: absolute;
+    top: -2px;
+}
+
+.noise {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('textures/grain.jpg');
+        animation: .1s infinite noise;
+        pointer-events: none;
+
+}
+
+
+.button {
+    display:flex;
+    align-items: center;
+    color: white;
+    font-family: 'Grotesk Regular';
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    margin-top: 50px;
+    cursor: pointer;
+}
+
+.button:not(#next1) {
+    position:fixed;
+    left: 0;
+    top: 50vh;
+}
+
+#next1 {
+    justify-content: center;
+}
+
+.button span {
+    padding-left: 25px;
+}
+
+.button img {
+    transform: rotateZ(-90deg);
+    transition: .5s transform ease-in-out;
+}
+
+.button img.btn-active {
+    transform: rotateZ(0deg)
+}
+
+@keyframes noise {
+
+    0%,
+    100% {
+        background-position: 0 0;
+    }
+
+    10% {
+        background-position: -5% -10%;
+    }
+
+    20% {
+        background-position: -15% 5%;
+    }
+
+    30% {
+        background-position: 7% -25%;
+    }
+
+    40% {
+        background-position: 20% 25%;
+    }
+
+    50% {
+        background-position: -25% 10%;
+    }
+
+    60% {
+        background-position: 15% 5%;
+    }
+
+    70% {
+        background-position: 0% 15%;
+    }
+
+    80% {
+        background-position: 25% 35%;
+    }
+
+    90% {
+        background-position: -10% 10%;
+    }
 }
